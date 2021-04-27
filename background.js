@@ -35,16 +35,42 @@ function getRandomSubarray(arr, size) {
   return shuffled.slice(0, size);
 }
 
+function shuffleArray(array) {
+  var copy = array.slice(0, array.length);
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = temp;
+  }
+  return copy;
+}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  fetch(
-    `https://tournesol.app/api/v2/videos/search_tournesol/?days_ago_lte=21&language=${
-      request.language
-    }&limit=${3 * request.video_amount}`,
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      chrome.tabs.sendMessage(sender.tab.id, {
-        data: getRandomSubarray(data.results, request.video_amount),
-      });
-    });
+  const recent_request = async () => {
+	const response = await fetch(`https://tournesol.app/api/v2/videos/search_tournesol/?days_ago_lte=21&language=${request.language}&limit=6`,);
+	const json = await response.json();
+	return json;
+  };
+
+  const old_request = async () => {
+	const response = await fetch(`https://tournesol.app/api/v2/videos/search_tournesol/?days_ago_gte=21&language=${request.language}&limit=6`,);
+	const json = await response.json();
+	return json;
+  };
+
+  const process = async () => {
+	const recent = await recent_request();
+	const old = await old_request();
+	const recent_sub = getRandomSubarray(recent.results, Math.ceil(request.video_amount / 2));
+	const old_sub = getRandomSubarray(old.results, Math.floor(request.video_amount / 2));
+	const videos = recent_sub.concat(old_sub);
+	const shuffled = shuffleArray(videos);
+
+	chrome.tabs.sendMessage(sender.tab.id, {
+	  data: shuffled,
+	});
+  }
+
+  process();
 });
