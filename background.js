@@ -47,30 +47,39 @@ function shuffleArray(array) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  const recent_request = async () => {
-	const response = await fetch(`https://tournesol.app/api/v2/videos/search_tournesol/?days_ago_lte=21&language=${request.language}&limit=6`,);
-	const json = await response.json();
-	return json;
-  };
+  const root_url =
+    'https://tournesol.app/api/v2/videos/search_tournesol/?reliability=100&importance=100&engaging=100&pedagogy=100&layman_friendly=100&diversity_inclusion=100&backfire_risk=100&better_habits=100&entertaining_relaxing=100';
 
-  const old_request = async () => {
-	const response = await fetch(`https://tournesol.app/api/v2/videos/search_tournesol/?days_ago_gte=21&language=${request.language}&limit=6`,);
-	const json = await response.json();
-	return json;
+  const request_recommendations = async (options) => {
+    console.log(`${root_url}&${options}`);
+
+    const response = await fetch(`${root_url}&${options}`);
+    const json = await response.json();
+    return json;
   };
 
   const process = async () => {
-	const recent = await recent_request();
-	const old = await old_request();
-	const recent_sub = getRandomSubarray(recent.results, Math.ceil(request.video_amount / 2));
-	const old_sub = getRandomSubarray(old.results, Math.floor(request.video_amount / 2));
-	const videos = recent_sub.concat(old_sub);
-	const shuffled = shuffleArray(videos);
+    const recent = await request_recommendations(
+      `days_ago_lte=21&language=${request.language}&limit=6`,
+    );
+    const old = await request_recommendations(
+      `days_ago_gte=21&language=${request.language}&limit=6`,
+    );
+    const recent_sub = getRandomSubarray(
+      recent.results,
+      Math.ceil(request.video_amount / 2),
+    );
+    const old_sub = getRandomSubarray(
+      old.results,
+      Math.floor(request.video_amount / 2),
+    );
+    const videos = recent_sub.concat(old_sub);
+    const shuffled = getRandomSubarray(videos, request.video_amount);
 
-	chrome.tabs.sendMessage(sender.tab.id, {
-	  data: shuffled,
-	});
-  }
+    chrome.tabs.sendMessage(sender.tab.id, {
+      data: shuffled,
+    });
+  };
 
   process();
 });
