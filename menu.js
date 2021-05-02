@@ -1,32 +1,66 @@
 'use strict';
 
-function rate_now() {
-  chrome.tabs.executeScript(null, {
-    code:
-      "var videoId = new URL(location.href).searchParams.get('v'); if (!videoId) { alert('This must be used on a link to a youtube video', 'ok'); } else { open(`https://tournesol.app/rate/${videoId}/...`, '_blank'); chrome.tabs.update(tab.id, { active: true }); }",
-  });
+
+function get_current_tab_video_id() {
+  function get_tab_video_id(tabs) {
+    for (let tab of tabs) { // only one tab is returned
+      var video_id = new URL(tab.url).searchParams.get('v');
+      if (video_id == null || video_id === "") {
+        return Promise.reject(new Error("not a video id"));
+      }
+      return video_id;
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({active:true,currentWindow:true}, resolve);
+  }).then(get_tab_video_id);
 }
+
+
+function rate_now() {
+  get_current_tab_video_id().then(videoId => {
+     chrome.tabs.create({url: `https://tournesol.app/rate/${videoId}/...`})
+  },
+    err => {
+      alert('This must be used on a link to a youtube video', 'ok');
+    }
+  );
+}
+
 
 function rate_later() {
-  chrome.tabs.executeScript(null, {
-    code:
-      "var videoId = new URL(location.href).searchParams.get('v'); if (!videoId) { alert('This must be used on a link to a youtube video', 'ok'); } else { open(`https://tournesol.app/rate_later_add/${videoId}`, '_blank'); chrome.tabs.update(tab.id, { active: true }); }",
-  });
+  get_current_tab_video_id().then(videoId => {
+     chrome.tabs.create({url: `https://tournesol.app/rate_later_add/${videoId}`})
+  },
+    err => {
+      alert('This must be used on a link to a youtube video', 'ok');
+    }
+  );
 }
+
 
 function details() {
-  chrome.tabs.executeScript(null, {
-    code:
-      "var videoId = new URL(location.href).searchParams.get('v'); if (!videoId) { alert('This must be used on a link to a youtube video', 'ok'); } else { open(`https://tournesol.app/details/${videoId}`, '_blank'); chrome.tabs.update(tab.id, { active: true }); }",
-  });
+  get_current_tab_video_id().then(videoId => {
+     chrome.tabs.create({url: `https://tournesol.app/details/${videoId}`})
+  },
+    err => {
+      alert('This must be used on a link to a youtube video', 'ok');
+    }
+  );
 }
 
+
 function report() {
-  chrome.tabs.executeScript(null, {
-    code:
-      "var videoId = new URL(location.href).searchParams.get('v'); if (!videoId) { alert('This must be used on a link to a youtube video', 'ok'); } else { open(`https://tournesol.app/report/${videoId}`, '_blank'); chrome.tabs.update(tab.id, { active: true }); }",
-  });
+  get_current_tab_video_id().then(videoId => {
+     chrome.tabs.create({url: `https://tournesol.app/report/${videoId}`})
+  },
+    err => {
+      alert('This must be used on a link to a youtube video', 'ok');
+    }
+  );
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('rate_now').addEventListener('click', rate_now);
