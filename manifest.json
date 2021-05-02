@@ -9,7 +9,7 @@
     "512": "favicon512.png"
   },
   "background": {
-    "scripts": ["background.js"],
+    "page": "background.html",
     "persistent": false
   },
   "browser_action": {
@@ -19,18 +19,19 @@
   "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*"],
-      "js": ["addTournesolRecommendations.js"],
+      "js": ["utils.js","addTournesolRecommendations.js"],
       "css": ["addTournesolRecommendations.css"],
 	  "run_at": "document_end"
     },
     {
       "matches": ["https://*.youtube.com/*"],
-      "js": ["addRateLaterButton.js"],
+      "js": ["utils.js","addRateLaterButton.js"],
 	  "css": ["addRateLaterButton.css"],
 	  "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
-	  "rate_now_icon.png"
+	  "rate_now_icon.png",
+	  "utils.mjs"
   ]
 }

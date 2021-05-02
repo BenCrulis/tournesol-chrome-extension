@@ -1,5 +1,3 @@
-'use strict';
-
 
 function get_current_tab_video_id() {
   function get_tab_video_id(tabs) {
