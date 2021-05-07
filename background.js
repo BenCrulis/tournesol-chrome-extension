@@ -60,26 +60,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   };
 
   const process = async () => {
-    const recent = await request_recommendations(
-      `days_ago_lte=21&language=${request.language}&limit=6`,
-    );
-    const old = await request_recommendations(
-      `days_ago_gte=21&language=${request.language}&limit=6`,
-    );
-    const recent_sub = getRandomSubarray(
-      recent.results,
-      Math.ceil(request.video_amount / 2),
-    );
-    const old_sub = getRandomSubarray(
-      old.results,
-      Math.floor(request.video_amount / 2),
-    );
-    const videos = recent_sub.concat(old_sub);
-    const shuffled = getRandomSubarray(videos, request.video_amount);
-
-    chrome.tabs.sendMessage(sender.tab.id, {
-      data: shuffled,
-    });
+    const recent = await request_recommendations(`days_ago_lte=21&language=${request.language}&limit=10`);
+    const old = await request_recommendations(`days_ago_gte=21&language=${request.language}&limit=30`);
+    const recent_sub = getRandomSubarray(recent.results, Math.ceil(request.video_amount / 2));
+    const old_sub = getRandomSubarray(old.results, Math.floor(request.video_amount / 2));
+    const videos = getRandomSubarray([...old_sub, ...recent_sub], request.video_amount);
+    chrome.tabs.sendMessage(sender.tab.id, { data: videos });
   };
 
   process();
