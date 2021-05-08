@@ -51,21 +51,8 @@ function details() {
   );
 }
 
-
-function report() {
-  get_current_tab_video_id().then(videoId => {
-     chrome.tabs.create({url: `https://tournesol.app/report/${videoId}`})
-  },
-    err => {
-      alert('This must be used on the page of a youtube video', 'ok');
-    }
-  );
-}
-
-
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('rate_now').addEventListener('click', rate_now);
   document.getElementById('rate_later').addEventListener('click', rate_later);
   document.getElementById('details').addEventListener('click', details);
-  document.getElementById('report').addEventListener('click', report);
 });
