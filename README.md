@@ -8,17 +8,6 @@ See the wiki page [Contribute to Tournesol](https://wiki.tournesol.app/index.php
 
 All the documentation for developing and distributing chrome extensions is here https://developer.chrome.com/docs/extensions/mv2/getstarted/
 
-## Firefox Docs
+## Deploy a new version of the extension
 
-To release the Firefox-extension:
-
-- Get the latest version of "tournesol-chrome-extension" from Github
-- Copy the "tournesol-chrome-extension" and name it "tournesol-firefox-extension"
-- In a terminal, go inside this new directory and run the folloing command:
->> zip -r -FS ../tournesol-firefox-extension.zip * --exclude '*.git*'
-
-- Connect to the Tournesol-app Firefox account
-- Go to the manage extention page
-- Click on "Send a new version"
-- Select the zip file you just created
-- Follow the on screen instructions
+To release the extension on Chrome or Firefox, run the script `./build.sh` and upload the generated zip file in the corresponding extension webstore.
