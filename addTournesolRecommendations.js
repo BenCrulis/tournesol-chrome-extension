@@ -90,7 +90,6 @@ chrome.runtime.onMessage.addListener(function ({ data }, sender, sendResponse) {
       lang_option.href = '#';
       lang_option.append(lang);
       lang_option.onclick = () => {
-        console.log('hello world');
         localStorage.setItem('tournesol_extension_config_language', lang);
       };
       return lang_option;

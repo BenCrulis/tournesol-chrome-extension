@@ -42,49 +42,48 @@ function process() {
 
     // If the button already exists, don't create a new one
     if (document.getElementById('tournesol-rate-button')) {
-      console.log('Button already exists');
       window.clearInterval(timer);
       return;
     }
 
-    console.log('Adding rate later button');
     window.clearInterval(timer);
 
     // Create Button
-    var rateNowButton = document.createElement('button');
-    rateNowButton.setAttribute('id', 'tournesol-rate-button');
-    rateNowButton.setAttribute(
-      'onclick',
-      "window.open('https://tournesol.app/rate_later_add/" +
-        videoId +
-        "', '_blank')",
-    );
+    var rateLaterButton = document.createElement('button');
+    rateLaterButton.setAttribute('id', 'tournesol-rate-button');
 
     // Image td for better vertical alignment
     var img_td = document.createElement('td');
     img_td.setAttribute('valign', 'middle');
-
-    // Image
     var image = document.createElement('img');
     image.setAttribute('id', 'tournesol-button-image');
     image.setAttribute('src', chrome.extension.getURL('rate_now_icon.png'));
     image.setAttribute('width', '20');
     img_td.append(image);
-    rateNowButton.append(img_td);
+    rateLaterButton.append(img_td);
 
     // Text td for better vertical alignment
     var text_td = document.createElement('td');
     text_td.setAttribute('valign', 'middle');
+    text_td_text = document.createTextNode('Rate Later')
+    text_td.append(text_td_text);
+    rateLaterButton.append(text_td);
 
-    // Text
-    text_td.append(document.createTextNode('Rate Later'));
-    rateNowButton.append(text_td);
+    // On click
+    rateLaterButton.onclick = () => {
+      text_td_text.replaceWith(document.createTextNode('Done!'))
+      rateLaterButton.onclick = () => {}
+      chrome.runtime.sendMessage({
+        message: 'addRateLater',
+        video_id: videoId
+      });
+    }
 
     // Insert after like and dislike buttons
     var div = document
       .getElementById('menu-container')
       .children.item('menu')
       .children[0].children.item('top-level-buttons');
-    div.insertBefore(rateNowButton, div.children[2]);
+    div.insertBefore(rateLaterButton, div.children[2]);
   }
 }

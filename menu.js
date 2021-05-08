@@ -11,7 +11,7 @@ function get_current_tab_video_id() {
   }
 
   return new Promise((resolve, reject) => {
-    chrome.tabs.query({active:true,currentWindow:true}, resolve);
+    chrome.tabs.query({active:true, currentWindow:true}, resolve);
   }).then(get_tab_video_id);
 }
 
@@ -21,7 +21,7 @@ function rate_now() {
      chrome.tabs.create({url: `https://tournesol.app/rate/${videoId}/...`})
   },
     err => {
-      alert('This must be used on a link to a youtube video', 'ok');
+      alert('This must be used on the page of a youtube video', 'ok');
     }
   );
 }
@@ -29,10 +29,13 @@ function rate_now() {
 
 function rate_later() {
   get_current_tab_video_id().then(videoId => {
-     chrome.tabs.create({url: `https://tournesol.app/rate_later_add/${videoId}`})
+    const button = document.getElementById('rate_later')
+    button.innerText = 'Done!'
+    button.disabled = true
+    addRateLater(videoId)
   },
     err => {
-      alert('This must be used on a link to a youtube video', 'ok');
+      alert('This must be used on the page of a youtube video', 'ok');
     }
   );
 }
@@ -43,7 +46,7 @@ function details() {
      chrome.tabs.create({url: `https://tournesol.app/details/${videoId}`})
   },
     err => {
-      alert('This must be used on a link to a youtube video', 'ok');
+      alert('This must be used on the page of a youtube video', 'ok');
     }
   );
 }
@@ -54,7 +57,7 @@ function report() {
      chrome.tabs.create({url: `https://tournesol.app/report/${videoId}`})
   },
     err => {
-      alert('This must be used on a link to a youtube video', 'ok');
+      alert('This must be used on the page of a youtube video', 'ok');
     }
   );
 }
