@@ -3,6 +3,8 @@
 // This part is called on connection for the first time on youtube.com/*
 /* ********************************************************************* */
 
+var browser = browser || chrome;
+
 //document.addEventListener('yt-navigate-finish', process);
 
 if (document.body) process();
@@ -57,10 +59,10 @@ function process() {
     text_p.setAttribute('valign', 'middle');
 
 
-    chrome.runtime.sendMessage({
+    browser.runtime.sendMessage({
       message: 'getVideoStatistics',
       video_id: videoId
-    }).then(function(resp) {
+    }, function(resp) {
       console.log("this is the response");
       console.log(resp);
 

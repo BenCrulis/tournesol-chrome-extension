@@ -20,7 +20,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     addRateLater(request.video_id)
   }
   else if (request.message == "getVideoStatistics") {
-    sendResponse(getVideoStatistics(request.video_id));
+    getVideoStatistics(request.video_id).then(sendResponse);
+    return true;
   }
 
   if (request.message == "getTournesolRecommendations") {
