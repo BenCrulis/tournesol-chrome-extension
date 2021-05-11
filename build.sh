@@ -11,7 +11,7 @@ rm manifest.json
 echo "Building extension for Firefox. . ."
 
 rm tournesol_extension_firefox.zip
-cp manifest_chrome.json manifest.json
+cp manifest_firefox.json manifest.json
 zip -r -FS tournesol_extension_firefox.zip * --exclude '.git'
 rm manifest.json
 
