@@ -2,7 +2,7 @@ div#tournesol-statistics {
   background: transparent;
   border: none;
   border-radius: 2px;
-  cursor: pointer;
+/*  cursor: pointer;*/
   font-family: 'Roboto', 'Noto', sans-serif;
   color: #f3bd00;
   margin-left: 10px;

@@ -63,17 +63,12 @@ function process() {
       message: 'getVideoStatistics',
       video_id: videoId
     }, function(resp) {
-      console.log("this is the response");
-      console.log(resp);
-
       if (document.getElementById('tournesol-statistics')) {
         return;
       }
 
       if (resp && resp.results && resp.results.length == 1) {
         vid = resp.results[0];
-        console.log(vid);
-
         tournesol_score = Math.round(vid.tournesol_score);
 
         text_td_text = document.createTextNode(`Score: ${tournesol_score}`)
