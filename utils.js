@@ -50,3 +50,7 @@ const getRandomSubarray = (arr, size) => {
   }
   return shuffled.slice(0, size);
 }
+
+const getVideoStatistics = (videoId) => {
+  return fetchTournesolApi(`videos/?video_id=${videoId}`, 'GET', {});
+}

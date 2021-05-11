@@ -1,0 +1,22 @@
+div#tournesol-statistics {
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+/*  cursor: pointer;*/
+  font-family: 'Roboto', 'Noto', sans-serif;
+  color: #f3bd00;
+  margin-left: 10px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  display: flex;
+  align-content: center;
+}
+
+div#tournesol-statistics > p {
+  font-weight: 500;
+  font-size: medium;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
+}
