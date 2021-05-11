@@ -5,7 +5,7 @@
 
 var browser = browser || chrome;
 
-//document.addEventListener('yt-navigate-finish', process);
+document.addEventListener('yt-navigate-finish', process);
 
 if (document.body) process();
 else document.addEventListener('DOMContentLoaded', process);
@@ -50,40 +50,44 @@ function process() {
 
     window.clearInterval(timer);
 
-    // Create statistic score div
-    var statistics_div = document.createElement('div');
-    statistics_div.setAttribute('id', 'tournesol-statistics');
-
-    // Text td for better vertical alignment
-    var text_p = document.createElement('p');
-    text_p.setAttribute('valign', 'middle');
-
-
     browser.runtime.sendMessage({
       message: 'getVideoStatistics',
       video_id: videoId
     }, function(resp) {
-      if (document.getElementById('tournesol-statistics')) {
+      if (document.getElementById('tournesol-details-button')) {
+        console.log("not rendering")
         return;
       }
 
       if (resp && resp.results && resp.results.length == 1) {
-        vid = resp.results[0];
-        tournesol_score = Math.round(vid.tournesol_score);
+        details = resp.results[0];
+        if (details.tournesol_score == 0) return;
 
-        text_td_text = document.createTextNode(`Score: ${tournesol_score}`)
-        text_p.append(text_td_text);
-        statistics_div.append(text_p);
+        // Create Button
+        var statisticsButton = document.createElement('button');
+        statisticsButton.setAttribute('id', 'tournesol-details-button');
+
+        // Text td for better vertical alignment
+        var statisticsTextTd = document.createElement('td');
+        statisticsTextTd.setAttribute('valign', 'middle');
+        statisticsTextTdText = document.createTextNode(`Score: ${details.tournesol_score.toFixed(0)}`)
+        statisticsTextTd.append(statisticsTextTdText);
+        statisticsButton.append(statisticsTextTd);
+
+        // On click
+        statisticsButton.onclick = () => {
+          open(`https://tournesol.app/details/${videoId}`)
+        }
 
         var div = document
           .getElementById('menu-container')
           .children.item('menu')
           .children[0].children.item('top-level-buttons');
-        div.insertBefore(statistics_div, div.children[2]);
+        div.insertBefore(statisticsButton, div.children[2]);
       }
 
     }).catch(err => {
-      console.log("error in getVideoStatistics");
+      console.log("Error in getVideoStatistics");
       console.log(err);
     });
   }

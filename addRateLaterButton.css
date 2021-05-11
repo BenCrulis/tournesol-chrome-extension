@@ -5,8 +5,7 @@ button#tournesol-rate-button {
   cursor: pointer;
   font-family: 'Roboto', 'Noto', sans-serif;
   color: #f3bd00;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 8px;
   display: inline-block;
   vertical-align: middle;
   text-transform: uppercase;
