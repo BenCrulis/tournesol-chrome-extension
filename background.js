@@ -19,6 +19,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message == "addRateLater") {
     addRateLater(request.video_id)
   }
+  else if (request.message == "getVideoStatistics") {
+    sendResponse(getVideoStatistics(request.video_id));
+  }
 
   if (request.message == "getTournesolRecommendations") {
     const api_url = 'videos/search_tournesol/?reliability=100&importance=100&engaging=100&pedagogy=100&layman_friendly=100&diversity_inclusion=100&backfire_risk=100&better_habits=100&entertaining_relaxing=100';

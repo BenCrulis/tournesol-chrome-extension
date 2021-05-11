@@ -19,8 +19,8 @@
   "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*"],
-      "js": ["addTournesolRecommendations.js", "addRateLaterButton.js"],
-      "css": ["addTournesolRecommendations.css", "addRateLaterButton.css"],
+      "js": ["addVideoStatistics.js", "addTournesolRecommendations.js", "addRateLaterButton.js"],
+      "css": ["addVideoStatistics.css", "addTournesolRecommendations.css", "addRateLaterButton.css"],
       "run_at": "document_end"
     }
   ],
