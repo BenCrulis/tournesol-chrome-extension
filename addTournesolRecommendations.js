@@ -160,7 +160,7 @@ chrome.runtime.onMessage.addListener(function ({ data }, sender, sendResponse) {
       video_score.className = 'video_text';
       video_score.append(
         'Rated ' +
-          Number(video.score).toFixed(0) +
+          Number(video.tournesol_score).toFixed(0) +
           ' points by ' +
           video.rating_n_experts +
           ' users',
