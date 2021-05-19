@@ -19,7 +19,7 @@
   "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*"],
-      "js": ["addVideoStatistics.js", "addTournesolRecommendations.js", "addRateLaterButton.js"],
+      "js": ["dependencies/plotly-latest.min.js", "addVideoStatistics.js", "addTournesolRecommendations.js", "addRateLaterButton.js"],
       "css": ["addVideoStatistics.css", "addTournesolRecommendations.css", "addRateLaterButton.css"],
       "run_at": "document_end"
     }
