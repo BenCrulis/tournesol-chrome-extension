@@ -11,3 +11,20 @@ button#tournesol-details-button {
   text-transform: uppercase;
   font-weight: 500;
 }
+
+#tournesol-stats-panel {
+  text-transform: initial;
+  background: white;
+  position: absolute;
+  z-index: 1000;
+  left: 0px;
+  border-radius: 15px;
+  border-width: 5px;
+  border-color: #234600;
+  border-style: solid;
+}
+
+#tournesol-stats-panel .js-plotly-plot {
+  border-radius: inherit;
+  overflow: hidden;
+}
