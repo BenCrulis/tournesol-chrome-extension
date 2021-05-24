@@ -30,15 +30,11 @@ function process() {
      */
     if (
       !document.getElementById('menu-container') ||
-      !document.getElementById('menu-container').children.item('menu') ||
-      !document.getElementById('menu-container').children.item('menu')
-        .children[0] ||
-      !document
-        .getElementById('menu-container')
-        .children.item('menu')
-        .children[0].children.item('top-level-buttons')
-    )
-      return;
+      !document.getElementById('menu-container').children['menu'] ||
+      !document.getElementById('menu-container').children['menu'].children[0] ||
+      !document.getElementById('menu-container').children['menu'].children[0].children['top-level-buttons-computed']
+    ) return;
+
 
     // If the button already exists, don't create a new one
     if (document.getElementById('tournesol-rate-button')) {
@@ -80,10 +76,7 @@ function process() {
     }
 
     // Insert after like and dislike buttons
-    var div = document
-      .getElementById('menu-container')
-      .children.item('menu')
-      .children[0].children.item('top-level-buttons');
+    var div = document.getElementById('menu-container').children['menu'].children[0].children['top-level-buttons-computed'];
     div.insertBefore(rateLaterButton, div.children[2]);
   }
 }

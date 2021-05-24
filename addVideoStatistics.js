@@ -33,14 +33,9 @@ function process() {
     if (
       !document.getElementById('menu-container') ||
       !document.getElementById('menu-container').children.item('menu') ||
-      !document.getElementById('menu-container').children.item('menu')
-        .children[0] ||
-      !document
-        .getElementById('menu-container')
-        .children.item('menu')
-        .children[0].children.item('top-level-buttons')
-    )
-      return;
+      !document.getElementById('menu-container').children.item('menu').children[0] ||
+      !document.getElementById('menu-container').children['menu'].children[0].children['top-level-buttons-computed']
+    ) return;
 
     // If the button already exists, don't create a new one
     if (document.getElementById('tournesol-statistics')) {
@@ -79,16 +74,9 @@ function process() {
           open(`https://tournesol.app/details/${videoId}`)
         }
 
-        var div = document
-          .getElementById('menu-container')
-          .children.item('menu')
-          .children[0].children.item('top-level-buttons');
+        var div = document.getElementById('menu-container').children['menu'].children[0].children['top-level-buttons-computed'];
         div.insertBefore(statisticsButton, div.children[2]);
       }
-
-    }).catch(err => {
-      console.log("Error in getVideoStatistics");
-      console.log(err);
-    });
+    })
   }
 }
