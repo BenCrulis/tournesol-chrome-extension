@@ -57,7 +57,7 @@ function process() {
       if (resp && resp.results && resp.results.length == 1) {
         details = resp.results[0];
         if (details.tournesol_score == 0) return;
-        if (details.tournesol_score > 0 && details.tournesol_score < 4000) alert("This video was rated below average by Tournesol's contributors", "Ok")
+        if (details.tournesol_score > 0 && details.tournesol_score < 400) alert("This video was rated below average by Tournesol's contributors", "Ok")
         if (details.tournesol_score < 0) alert("Be careful! This video was rated very negatively by Tournesol's contributors", "Ok")
 
         // Create Button
