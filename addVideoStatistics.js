@@ -5,77 +5,6 @@
 
 var browser = browser || chrome;
 
-const criterias = [
-	"reliability",
-	"importance",
-	"engaging",
-	"pedagogy",
-	"layman_friendly",
-	"diversity_inclusion",
-	"backfire_risk",
-	"better_habits",
-	"entertaining_relaxing"
-];
-
-
-const CRITERIAS = [
-	{
-		key: "reliability",
-		name: "reliable and not misleading",
-		color: "#6573C3",
-		description: "no description yet"
-	},
-	{
-		key: "importance",
-		name: "important and actionable",
-		color: "#FF784E",
-		description: "no description yet"
-	},
-	{
-		key: "engaging",
-		name: "engaging and though-provoking",
-		color: "#FFC107",
-		description: "no description yet"
-	},
-	{
-		key: "pedagogy",
-		name: "clear and pedagogical",
-		color: "#8561C5",
-		description: "no description yet"
-	},
-	{
-		key: "layman_friendly",
-		name: "layman-friendly",
-		color: "#50F22C",
-		description: "no description yet"
-	},
-	{
-		key: "diversity_inclusion",
-		name: "diversity and inclusion",
-		color: "#2CEFF2",
-		description: "no description yet"
-	},
-	{
-		key: "backfire_risk",
-		name: "resilience to backfiring risks",
-		color: "#E91E63",
-		description: "no description yet"
-	},
-	{
-		key: "better_habits",
-		name: "encourages better habits",
-		color: "#C6EB34",
-		description: "no description yet"
-	},
-	{
-		key: "entertaining_relaxing",
-		name: "entertaining and relaxing",
-		color: "#6BA4FF",
-		description: "no description yet"
-	},
-];
-
-
 document.addEventListener('yt-navigate-finish', process);
 
 if (document.body) process();
@@ -119,7 +48,11 @@ function process() {
     browser.runtime.sendMessage({
       message: 'getVideoStatistics',
       video_id: videoId
-    }, function(resp) {
+    }, function(resp_and_constants) {
+			let resp = resp_and_constants[0];
+			const CONSTANTS = resp_and_constants[1];
+			const CRITERIAS = CONSTANTS["features"];
+			console.log(CONSTANTS);
       if (document.getElementById('tournesol-details-button')) {
         console.log("not rendering")
         return;
@@ -162,8 +95,8 @@ function process() {
 
 				console.log(details);
 
-				criteria_values = CRITERIAS.map((c) => details[c["key"]]).reverse();
-				criteria_names = CRITERIAS.map((c) => c["name"]).reverse();
+				criteria_values = CRITERIAS.map((c) => details[c["feature"]]).reverse();
+				criteria_names = CRITERIAS.map((c) => c["description"]).reverse();
 
 				console.log(criteria_values);
 

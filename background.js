@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     addRateLater(request.video_id)
   }
   else if (request.message == "getVideoStatistics") {
-    getVideoStatistics(request.video_id).then(sendResponse);
+    Promise.all([getVideoStatistics(request.video_id), getConstants()]).then(sendResponse);
     return true;
   }
 
