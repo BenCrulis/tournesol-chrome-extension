@@ -142,85 +142,84 @@ function process() {
         statisticsTextTd.append(statisticsTextTdText);
         statisticsButton.append(statisticsTextTd);
 
-		// statistics panel
-		statsPanel = document.createElement("div");
-		statsPanel.setAttribute('id', "tournesol-stats-panel");
-		statsPanel.style.display = 'none';
-
-		const PANEL_DISPLAY = 'block';
-
-		function toggle_panel() {
-			if (statsPanel.style.display === "none") {
-				statsPanel.style.display = PANEL_DISPLAY;
-			}
-			else {
+				// statistics panel
+				statsPanel = document.createElement("div");
+				statsPanel.setAttribute('id', "tournesol-stats-panel");
 				statsPanel.style.display = 'none';
-			}
-		}
 
-		plotlyBarChart = document.createElement("div");
+				const PANEL_DISPLAY = 'block';
 
-		console.log(details);
+				function toggle_panel() {
+					if (statsPanel.style.display === "none") {
+						statsPanel.style.display = PANEL_DISPLAY;
+					}
+					else {
+						statsPanel.style.display = 'none';
+					}
+				}
 
-		criteria_values = CRITERIAS.map((c) => details[c["key"]]).reverse();
-		criteria_names = CRITERIAS.map((c) => c["name"]).reverse();
+				plotlyBarChart = document.createElement("div");
 
-		console.log(criteria_values);
+				console.log(details);
 
-		var data = [{
-			type: 'bar',
-			x: criteria_values,
-			y: criteria_names,
-			marker: {
-				color: CRITERIAS.map((c) => c["color"]).reverse(),
-			},
-			orientation: 'h',
-			width: 0.5
-		}];
+				criteria_values = CRITERIAS.map((c) => details[c["key"]]).reverse();
+				criteria_names = CRITERIAS.map((c) => c["name"]).reverse();
 
-		const layout = {
-			width: 720,
-			height: 250,
-			title: "criteria scores",
-			//font: {size: 18},
-			dragmode: false, // prevent resizing by clic and drag
+				console.log(criteria_values);
 
-			margin: {
-			    l: 230,
-			    r: 20,
-			    t: 30,
-			    b: 20
-		    },
+				var data = [{
+					type: 'bar',
+					x: criteria_values,
+					y: criteria_names,
+					marker: {
+						color: CRITERIAS.map((c) => c["color"]).reverse(),
+					},
+					orientation: 'h',
+					width: 0.5
+				}];
 
-		};
+				const layout = {
+					width: 720,
+					height: 250,
+					title: "criteria scores",
+					//font: {size: 18},
+					dragmode: false, // prevent resizing by clic and drag
 
-		const config = {
-			displayModeBar: false,
-		};
+					margin: {
+					    l: 230,
+					    r: 20,
+					    t: 30,
+					    b: 20
+				    },
 
-        Plotly.newPlot(plotlyBarChart, data, layout, config);
+				};
 
-		statsPanel.append(plotlyBarChart);
+				const config = {
+					displayModeBar: false,
+				};
 
-		detailsLink = document.createElement("a")
-		detailsLink.setAttribute('href', `https://tournesol.app/details/${videoId}`)
-		detailsLink.innerText = "see more details on tournesol.app"
-		statsPanel.append(detailsLink);
+		        Plotly.newPlot(plotlyBarChart, data, layout, config);
 
-		statisticsButton.append(statsPanel);
+				statsPanel.append(plotlyBarChart);
+
+				detailsLink = document.createElement("a")
+				detailsLink.setAttribute('href', `https://tournesol.app/details/${videoId}`)
+				detailsLink.innerText = "see more details on tournesol.app"
+				statsPanel.append(detailsLink);
+
+				statisticsButton.append(statsPanel);
 
         // On click
 
         statisticsButton.onclick = toggle_panel;
 
-        var div = document
-          .getElementById('menu-container')
-          .children.item('menu')
-          .children[0].children.item('top-level-buttons');
-
+				var div = document.getElementById('menu-container')
+					.children['menu']
+					.children[0]
+					.children['top-level-buttons-computed'];
 
         div.insertBefore(statisticsButton, div.children[2]);
       }
-    })
+    });
   }
 }
