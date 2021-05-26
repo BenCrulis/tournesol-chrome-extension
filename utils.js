@@ -54,3 +54,13 @@ const getRandomSubarray = (arr, size) => {
 const getVideoStatistics = (videoId) => {
   return fetchTournesolApi(`videos/?video_id=${videoId}`, 'GET', {});
 }
+
+
+let CONSTANTS = null;
+
+const getConstants = async () => {
+  if (CONSTANTS === null) {
+    CONSTANTS = await fetchTournesolApi("constants/view_constants/", 'GET', {});
+  }
+  return CONSTANTS;
+}
