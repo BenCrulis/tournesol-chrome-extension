@@ -210,9 +210,15 @@ function process() {
 		statisticsButton.append(statsPanel);
 
         // On click
+
         statisticsButton.onclick = toggle_panel;
 
-        var div = document.getElementById('menu-container').children['menu'].children[0].children['top-level-buttons-computed'];
+        var div = document
+          .getElementById('menu-container')
+          .children.item('menu')
+          .children[0].children.item('top-level-buttons');
+
+
         div.insertBefore(statisticsButton, div.children[2]);
       }
     })
